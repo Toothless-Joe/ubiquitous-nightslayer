@@ -46,13 +46,14 @@
             border: 1px solid #c9302c; box-shadow: 0 0 15px rgba(201, 48, 44, 0.4);
             position: absolute; bottom: 120%; left: 50%; opacity: 0;
             transition: opacity 0.3s; z-index: 20; font-size: 14px; line-height: 1.5;
+            pointer-events: auto; /* Allows clicking links inside */
         }
         
         /* Tooltip Alignment */
         .recruit .tooltip-text { transform: translateX(-80%); width: 350px; } 
-        .softres .tooltip-text { transform: translateX(-50%); pointer-events: auto; } 
+        .softres .tooltip-text { transform: translateX(-50%); } 
 
-        /* Show Tooltip */
+        /* Show Tooltip (Hover OR Click/Active) */
         .link-box:hover .tooltip-text,
         .link-box.active .tooltip-text {
             visibility: visible; opacity: 1;
@@ -83,7 +84,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            text-decoration: none; /* Removes underline from link */
+            text-decoration: none; 
             color: #ddd;
         }
         .roster-row:hover {
@@ -110,7 +111,7 @@
         <a href="https://www.youtube.com/channel/UC7tfn3SN2w_XpDY6GMobH7w" target="_blank" class="link-box youtube"></a>
         <a href="https://fresh.warcraftlogs.com/guild/us/nightslayer/ubiquitous" target="_blank" class="link-box logs"></a>
         
-        <div class="link-box softres" id="softres-box" onclick="toggleTooltip(event)">
+        <div class="link-box softres" id="softres-box" onclick="toggleTooltip(event, 'softres-box')">
             <div class="tooltip-text">
                 <span class="tooltip-header">Raid Sign-ups</span>
                 <div id="discord-signups">Fetching latest post...</div>
@@ -118,7 +119,7 @@
             </div>
         </div>
 
-        <div class="link-box recruit">
+        <div class="link-box recruit" id="recruit-box" onclick="toggleTooltip(event, 'recruit-box')">
             <div class="tooltip-text">
                 <span class="tooltip-header">About Ubiquitous</span>
                 <p style="margin-top:0;">We are a community of mature players united by a single goal: clearing content efficiently while genuinely enjoying the game.</p>
@@ -165,13 +166,30 @@
             }
         }
 
-        // 2. Tooltip Toggle
-        function toggleTooltip(event) {
+        // 2. Universal Tooltip Toggle
+        // This handles BOTH Recruitment and Soft Reserve now.
+        function toggleTooltip(event, id) {
             event.stopPropagation();
-            document.getElementById('softres-box').classList.toggle('active');
+            
+            var clickedElement = document.getElementById(id);
+            var isAlreadyActive = clickedElement.classList.contains('active');
+
+            // Close ALL tooltips first (so they don't overlap)
+            document.querySelectorAll('.link-box').forEach(function(box) {
+                box.classList.remove('active');
+            });
+
+            // If it wasn't already open, open it now
+            if (!isAlreadyActive) {
+                clickedElement.classList.add('active');
+            }
         }
+
+        // Close all tooltips when clicking the background
         document.addEventListener('click', function() {
-            document.getElementById('softres-box').classList.remove('active');
+            document.querySelectorAll('.link-box').forEach(function(box) {
+                box.classList.remove('active');
+            });
         });
 
         // 3. Discord Fetcher
@@ -193,5 +211,3 @@
     </script>
 </body>
 </html>
-
-

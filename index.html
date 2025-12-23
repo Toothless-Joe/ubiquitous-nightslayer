@@ -27,8 +27,8 @@
         /* --- GLOWING BUTTON STYLES --- */
         .link-box {
             position: absolute; 
-            /* Moved down to align with image */
-            top: 66%;      
+            /* MOVED UP from 66% to 61.5% */
+            top: 61.5%;      
             height: 10%;   
             z-index: 10;
             cursor: pointer; 
@@ -60,18 +60,19 @@
             to { box-shadow: 0 0 20px #ff0000, 0 0 50px #ff0000, 0 0 10px white, inset 0 0 20px #ff0000; }
         }
 
-        /* --- HORIZONTAL POSITIONS & WIDTHS (Customized per button) --- */
-        /* Youtube is short */
-        .youtube  { left: 13%; width: 13%; } 
+        /* --- HORIZONTAL POSITIONS (Shifted LEFT) --- */
         
-        /* Logs is long */
-        .logs     { left: 30%; width: 19%; }
+        /* Youtube: Moved left to 11% */
+        .youtube  { left: 11%; width: 13%; } 
         
-        /* Soft Res is medium */
-        .softres  { left: 53%; width: 17%; } 
+        /* Logs: Moved left to 29% */
+        .logs     { left: 29%; width: 19%; }
         
-        /* Recruit is medium */
-        .recruit  { left: 74%; width: 17%; }
+        /* Soft Res: Moved left to 51% */
+        .softres  { left: 51%; width: 17%; } 
+        
+        /* Recruit: Moved left to 72% */
+        .recruit  { left: 72%; width: 17%; }
 
         /* --- POPUP TOOLTIPS --- */
         .tooltip-text {

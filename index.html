@@ -27,9 +27,12 @@
         /* --- GLOWING BUTTON STYLES --- */
         .link-box {
             position: absolute; 
-            /* Moved UP slightly to 63.5% */
-            top: 63.5%;      
-            height: 11%; /* Increased height slightly to cover full button */   
+            /* Vertical Position */
+            top: 63%;      
+            /* Uniform Size for ALL buttons */
+            height: 12%;   
+            width: 19%;    
+            
             z-index: 10;
             cursor: pointer; 
             
@@ -60,19 +63,13 @@
             to { box-shadow: 0 0 20px #ff0000, 0 0 50px #ff0000, 0 0 10px white, inset 0 0 20px #ff0000; }
         }
 
-        /* --- HORIZONTAL POSITIONS (Shifted Left & Widened) --- */
+        /* --- HORIZONTAL POSITIONS (Uniform Spacing) --- */
+        /* All widths are now set to 19% in the .link-box class above */
         
-        /* Youtube: Moved Left to 8.5%, Width 17% */
-        .youtube  { left: 8.5%; width: 17%; } 
-        
-        /* Logs: Moved Left to 27.5%, Width 21% */
-        .logs     { left: 27.5%; width: 21%; }
-        
-        /* Soft Res: Moved Left to 49%, Width 21% */
-        .softres  { left: 49%; width: 21%; } 
-        
-        /* Recruit: Moved Left to 71%, Width 21% */
-        .recruit  { left: 71%; width: 21%; }
+        .youtube  { left: 9%; } 
+        .logs     { left: 30%; }
+        .softres  { left: 51%; } 
+        .recruit  { left: 72%; }
 
         /* --- POPUP TOOLTIPS --- */
         .tooltip-text {
@@ -176,3 +173,4 @@
     </script>
 </body>
 </html>
+

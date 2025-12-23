@@ -8,7 +8,7 @@
         /* --- MAIN STYLES --- */
         body {
             margin: 0; padding: 0; 
-            background-color: black; /* CHANGED TO PURE BLACK */
+            background-color: black; 
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden; 
@@ -19,11 +19,14 @@
             display: block; 
             max-width: 100%; 
             height: auto; 
-            max-height: 100vh; 
-            object-fit: contain;
+            /* Fixes pixelation by preventing the image from stretching too big */
+            max-height: 85vh; 
+            width: auto;
+            /* Subtle glow behind the main logo */
+            filter: drop-shadow(0 0 10px rgba(200, 0, 0, 0.3));
         }
 
-        /* --- BUTTON ZONES --- */
+        /* --- GLOWING BUTTON STYLES --- */
         .link-box {
             position: absolute; 
             top: 64%;      
@@ -31,7 +34,42 @@
             width: 18%;    
             z-index: 10;
             cursor: pointer; 
-            background-color: transparent; 
+            
+            /* The Shape */
+            border-radius: 15px; /* Rounds the corners to match the image better */
+            border: 1px solid rgba(255, 0, 0, 0.1); /* Faint border always visible */
+            
+            /* The Animation Transition */
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* THE DAZZLE EFFECT (On Hover) */
+        .link-box:hover, .link-box.active {
+            /* 1. Brighter Border */
+            border: 1px solid #ff5555;
+            
+            /* 2. Background tint */
+            background-color: rgba(255, 0, 0, 0.1);
+            
+            /* 3. The Neon Glow (Multiple layers for intensity) */
+            box-shadow: 
+                0 0 10px #ff0000,       /* Inner glow */
+                0 0 20px #ff0000,       /* Middle glow */
+                0 0 40px #ff0000,       /* Outer glow */
+                inset 0 0 15px #ff0000; /* Glow inside the box */
+            
+            /* 4. The Pulse Animation */
+            animation: neon-pulse 1.5s infinite alternate;
+        }
+
+        /* Keyframes: Makes the glow "breathe" */
+        @keyframes neon-pulse {
+            from {
+                box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, inset 0 0 10px #ff0000;
+            }
+            to {
+                box-shadow: 0 0 20px #ff0000, 0 0 50px #ff0000, 0 0 10px white, inset 0 0 20px #ff0000;
+            }
         }
 
         /* --- HORIZONTAL POSITIONS --- */
@@ -40,11 +78,15 @@
         .softres  { left: 51%; } 
         .recruit  { left: 71%; }
 
-        /* --- TOOLTIP STYLES --- */
+        /* --- POPUP TOOLTIP STYLES --- */
         .tooltip-text {
-            visibility: hidden; width: 300px; background-color: rgba(0, 0, 0, 0.95); /* Pure black background for popups too */
+            visibility: hidden; width: 300px; background-color: rgba(0, 0, 0, 0.95);
             color: #fff; text-align: left; border-radius: 8px; padding: 20px;
-            border: 1px solid #c9302c; box-shadow: 0 0 15px rgba(201, 48, 44, 0.4);
+            
+            /* Red Glow for the Popup Box too */
+            border: 1px solid #ff0000; 
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+            
             position: absolute; bottom: 120%; left: 50%; opacity: 0;
             transition: opacity 0.3s; z-index: 20; font-size: 14px; line-height: 1.5;
             pointer-events: auto;
@@ -63,6 +105,7 @@
         .tooltip-header {
             font-weight: bold; font-size: 16px; color: #ff5555;
             margin-bottom: 8px; border-bottom: 1px solid #444; padding-bottom: 5px; display: block;
+            text-shadow: 0 0 5px #ff0000; /* Glowing Text Header */
         }
 
         /* --- ROSTER STYLES --- */
@@ -74,26 +117,20 @@
             padding-top: 10px;
         }
         .roster-row {
-            margin-bottom: 6px;
-            padding: 4px;
-            border-radius: 4px;
-            transition: background 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none; 
-            color: #ddd;
+            margin-bottom: 6px; padding: 4px; border-radius: 4px;
+            transition: background 0.2s; display: flex;
+            justify-content: space-between; align-items: center;
+            text-decoration: none; color: #ddd;
         }
         .roster-row:hover {
-            background-color: rgba(255, 85, 85, 0.1);
+            background-color: rgba(255, 0, 0, 0.2);
             color: #fff;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
         }
         .roster-row:hover::after {
-            content: "Message ->";
-            font-size: 10px;
-            color: #aaa;
+            content: "Message ->"; font-size: 10px; color: #ff5555;
         }
-        .roster-role { color: #ff5555; font-weight: bold; margin-right: 5px; }
+        .roster-role { color: #ff5555; font-weight: bold; margin-right: 5px; text-shadow: 0 0 3px #500; }
     </style>
 </head>
 <body>
@@ -129,19 +166,15 @@
                     <a href="https://discord.com/users/196004305252122624" target="_blank" class="roster-row">
                         <span><span class="roster-role">GM:</span> Slappy</span>
                     </a>
-                    
                     <a href="https://discord.com/users/307250863343403030" target="_blank" class="roster-row">
                         <span><span class="roster-role">Co-GM:</span> Zizex</span>
                     </a>
-                    
                     <a href="https://discord.com/users/278604665459834890" target="_blank" class="roster-row">
                         <span><span class="roster-role">Officer:</span> Facepom</span>
                     </a>
-                    
                     <a href="https://discord.com/users/136312701390422017" target="_blank" class="roster-row">
                         <span><span class="roster-role">Officer:</span> Beekeeperjim</span>
                     </a>
-
                     <a href="https://discord.com/users/457738183510196226" target="_blank" class="roster-row">
                         <span><span class="roster-role">Officer:</span> Frosty</span>
                     </a>
@@ -180,7 +213,6 @@
             }
         }
 
-        // Close on background click
         document.addEventListener('click', function() {
             document.querySelectorAll('.link-box').forEach(function(box) {
                 box.classList.remove('active');

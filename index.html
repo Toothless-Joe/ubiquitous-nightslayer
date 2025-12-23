@@ -7,7 +7,8 @@
     <style>
         /* --- MAIN STYLES --- */
         body {
-            margin: 0; padding: 0; background-color: #050000;
+            margin: 0; padding: 0; 
+            background-color: black; /* CHANGED TO PURE BLACK */
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden; 
@@ -41,25 +42,22 @@
 
         /* --- TOOLTIP STYLES --- */
         .tooltip-text {
-            visibility: hidden; width: 300px; background-color: rgba(10, 10, 10, 0.95);
+            visibility: hidden; width: 300px; background-color: rgba(0, 0, 0, 0.95); /* Pure black background for popups too */
             color: #fff; text-align: left; border-radius: 8px; padding: 20px;
             border: 1px solid #c9302c; box-shadow: 0 0 15px rgba(201, 48, 44, 0.4);
             position: absolute; bottom: 120%; left: 50%; opacity: 0;
             transition: opacity 0.3s; z-index: 20; font-size: 14px; line-height: 1.5;
-            pointer-events: auto; /* Allows clicking links inside */
+            pointer-events: auto;
         }
         
-        /* Tooltip Alignment */
         .recruit .tooltip-text { transform: translateX(-80%); width: 350px; } 
         .softres .tooltip-text { transform: translateX(-50%); } 
 
-        /* Show Tooltip (Hover OR Click/Active) */
         .link-box:hover .tooltip-text,
         .link-box.active .tooltip-text {
             visibility: visible; opacity: 1;
         }
 
-        /* Links & Headers */
         #discord-signups a { color: #ff5555; text-decoration: underline; font-weight: bold; }
         
         .tooltip-header {
@@ -75,7 +73,6 @@
             border-top: 1px solid #333;
             padding-top: 10px;
         }
-        /* Roster Links (The names) */
         .roster-row {
             margin-bottom: 6px;
             padding: 4px;
@@ -166,26 +163,24 @@
             }
         }
 
-        // 2. Universal Tooltip Toggle
-        // This handles BOTH Recruitment and Soft Reserve now.
+        // 2. Tooltip Toggle
         function toggleTooltip(event, id) {
             event.stopPropagation();
-            
             var clickedElement = document.getElementById(id);
             var isAlreadyActive = clickedElement.classList.contains('active');
 
-            // Close ALL tooltips first (so they don't overlap)
+            // Close ALL tooltips
             document.querySelectorAll('.link-box').forEach(function(box) {
                 box.classList.remove('active');
             });
 
-            // If it wasn't already open, open it now
+            // If it wasn't open, open it
             if (!isAlreadyActive) {
                 clickedElement.classList.add('active');
             }
         }
 
-        // Close all tooltips when clicking the background
+        // Close on background click
         document.addEventListener('click', function() {
             document.querySelectorAll('.link-box').forEach(function(box) {
                 box.classList.remove('active');

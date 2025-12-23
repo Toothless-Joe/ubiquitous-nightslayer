@@ -27,10 +27,9 @@
         /* --- GLOWING BUTTON STYLES --- */
         .link-box {
             position: absolute; 
-            /* Vertical Position */
             top: 63%;      
-            /* Uniform Size for ALL buttons */
             height: 12%;   
+            /* Default width for the first 3 buttons */
             width: 19%;    
             
             z-index: 10;
@@ -63,19 +62,14 @@
             to { box-shadow: 0 0 20px #ff0000, 0 0 50px #ff0000, 0 0 10px white, inset 0 0 20px #ff0000; }
         }
 
-        /* --- HORIZONTAL POSITIONS (Recruitment adjusted) --- */
+        /* --- HORIZONTAL POSITIONS --- */
         
-        /* Kept at 8.1% */
         .youtube  { left: 8.1%; } 
-        
-        /* Kept at 30.1% */
         .logs     { left: 30.1%; }
-        
-        /* Kept at 50.9% */
         .softres  { left: 50.9%; } 
         
-        /* Moved Right to 72.4% */
-        .recruit  { left: 72.4%; }
+        /* Recruitment: Left margin kept same, width increased slightly to stretch right */
+        .recruit  { left: 72.4%; width: 19.5%; }
 
         /* --- POPUP TOOLTIPS --- */
         .tooltip-text {

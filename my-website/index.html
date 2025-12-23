@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubiquitous Nightslayer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* Pure Black */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .splash-container {
+            position: relative;
+            max-width: 100%;
+            display: inline-block;
+        }
+
+        .splash-image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            max-height: 100vh;
+        }
+
+        /* --- BUTTON STYLES --- */
+        .link-box {
+            position: absolute;
+            top: 64%;
+            height: 9%;
+            width: 14%; 
+            z-index: 10;
+            cursor: pointer;
+            background-color: transparent; 
+        }
+
+        /* Button Positions */
+        .discord  { left: 8%; }
+        .youtube  { left: 26%; }
+        .logs     { left: 43%; }
+        .softres  { left: 61%; }
+        .recruit  { left: 79%; }
+
+        /* --- HOVER POPUP STYLES --- */
+        .tooltip-text {
+            visibility: hidden;
+            width: 300px;
+            background-color: rgba(0, 0, 0, 0.95); /* Pure Black background for popups */
+            color: #fff;
+            text-align: left;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #c9302c; /* Red border */
+            box-shadow: 0 0 15px rgba(201, 48, 44, 0.4);
+            
+            /* Positioning */
+            position: absolute;
+            bottom: 120%; 
+            left: 50%;
+            
+            /* Animation */
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 20;
+            font-size: 14px;
+            line-height: 1.5;
+            cursor: default;
+        }
+
+        /* Alignment tweaks */
+        .recruit .tooltip-text { transform: translateX(-80%); } 
+        .softres .tooltip-text { transform: translateX(-50%); } 
+
+        /* Show the popup on hover */
+        .link-box:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip-header {
+            font-weight: bold;
+            font-size: 16px;
+            color: #ff5555;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+            display: block;
+        }
+
+        .tooltip-section {
+            margin-bottom: 15px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .link-box { top: 65%; height: 8%; }
+            .tooltip-text {
+                width: 250px;
+                font-size: 12px;
+            }
+            .recruit .tooltip-text { transform: translateX(-90%); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="splash-container">
+        <img src="background.jpg" alt="Ubiquitous Nightslayer" class="splash-image">
+
+        <a href="javascript:void(0)" onclick="checkDiscordPassword()" class="link-box discord" title="Join Discord"></a>
+        
+        <a href="https://www.youtube.com/channel/UC7tfn3SN2w_XpDY6GMobH7w" target="_blank" class="link-box youtube" title="Watch on YouTube"></a>
+        
+        <a href="https://fresh.warcraftlogs.com/guild/us/nightslayer/ubiquitous" target="_blank" class="link-box logs" title="Warcraft Logs"></a>
+        
+        <a href="https://discord.com/channels/1441292810325332001/1441966409935487106" target="_blank" class="link-box softres">
+            <div class="tooltip-text">
+                <span class="tooltip-header">Raid Sign-ups</span>
+                We use SoftRes.it for loot. Active links are pinned in the Discord channel.<br><br>
+                <span style="color: #ff5555;">&raquo; Click to open Discord</span>
+            </div>
+        </a>
+        
+        <div class="link-box recruit">
+            <div class="tooltip-text">
+                
+                <div class="tooltip-section">
+                    <span class="tooltip-header">About Ubiquitous</span>
+                    We are a community of mature players united by a single goal: clearing content efficiently while genuinely enjoying the game.
+                </div>
+
+                <div class="tooltip-section">
+                    <span class="tooltip-header">Our Philosophy</span>
+                    Transparency is our foundation. The core raiders drive the direction of the guild, while officers exist solely to facilitate the will of the group.
+                </div>
+
+                <div class="tooltip-section" style="border-top: 1px solid #444; padding-top: 10px; margin-bottom: 0;">
+                    <span class="tooltip-header">High Priority Needs</span>
+                    <ul style="margin: 5px 0 0 20px; padding: 0; color: #ff5555;">
+                        <li>Hunter (2)</li>
+                        <li>Retribution Paladin</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function checkDiscordPassword() {
+            var password = prompt("Please enter the password to join Discord:");
+            
+            // Logic: Check password, trim spaces, open in SAME window to prevent blocking
+            if (password && password.trim() === "Feetpicsplox") {
+                window.location.href = "https://discord.gg/WVkZUKaKPJ";
+            } else if (password != null) {
+                alert("Incorrect password.");
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -5,150 +5,191 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ubiquitous Nightslayer</title>
     <style>
+        /* --- MAIN STYLES --- */
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #000000; /* Pure Black */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0; background-color: #050000;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; 
+        }
+        .splash-container { position: relative; max-width: 100%; display: inline-block; }
+        
+        .splash-image { 
+            display: block; 
+            max-width: 100%; 
+            height: auto; 
+            max-height: 100vh; 
+            object-fit: contain;
         }
 
-        .splash-container {
-            position: relative;
-            max-width: 100%;
-            display: inline-block;
-        }
-
-        .splash-image {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            max-height: 100vh;
-        }
-
-        /* --- BUTTON STYLES --- */
+        /* --- BUTTON ZONES --- */
         .link-box {
-            position: absolute;
-            top: 64%;
-            height: 9%;
-            width: 14%; 
+            position: absolute; 
+            top: 64%;      
+            height: 10%;   
+            width: 18%;    
             z-index: 10;
-            cursor: pointer;
+            cursor: pointer; 
             background-color: transparent; 
         }
 
-        /* Button Positions */
-        .discord  { left: 8%; }
-        .youtube  { left: 26%; }
-        .logs     { left: 43%; }
-        .softres  { left: 61%; }
-        .recruit  { left: 79%; }
+        /* --- HORIZONTAL POSITIONS --- */
+        .youtube  { left: 11%; } 
+        .logs     { left: 31%; }
+        .softres  { left: 51%; } 
+        .recruit  { left: 71%; }
 
-        /* --- HOVER POPUP STYLES --- */
+        /* --- TOOLTIP STYLES --- */
         .tooltip-text {
-            visibility: hidden;
-            width: 300px;
-            background-color: rgba(0, 0, 0, 0.95);
-            color: #fff;
-            text-align: left;
-            border-radius: 8px;
-            padding: 20px;
-            border: 1px solid #c9302c;
-            box-shadow: 0 0 15px rgba(201, 48, 44, 0.4);
-            
-            position: absolute;
-            bottom: 120%; 
-            left: 50%;
-            
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 20;
-            font-size: 14px;
-            line-height: 1.5;
-            cursor: default;
+            visibility: hidden; width: 300px; background-color: rgba(10, 10, 10, 0.95);
+            color: #fff; text-align: left; border-radius: 8px; padding: 20px;
+            border: 1px solid #c9302c; box-shadow: 0 0 15px rgba(201, 48, 44, 0.4);
+            position: absolute; bottom: 120%; left: 50%; opacity: 0;
+            transition: opacity 0.3s; z-index: 20; font-size: 14px; line-height: 1.5;
+        }
+        
+        /* Tooltip Alignment */
+        .recruit .tooltip-text { transform: translateX(-80%); width: 350px; } 
+        .softres .tooltip-text { transform: translateX(-50%); pointer-events: auto; } 
+
+        /* Show Tooltip */
+        .link-box:hover .tooltip-text,
+        .link-box.active .tooltip-text {
+            visibility: visible; opacity: 1;
         }
 
-        .recruit .tooltip-text { transform: translateX(-80%); } 
-        .softres .tooltip-text { transform: translateX(-50%); } 
-
-        .link-box:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-
+        /* Links & Headers */
+        #discord-signups a { color: #ff5555; text-decoration: underline; font-weight: bold; }
+        
         .tooltip-header {
-            font-weight: bold;
-            font-size: 16px;
-            color: #ff5555;
-            margin-bottom: 5px;
-            border-bottom: 1px solid #444;
-            padding-bottom: 5px;
-            display: block;
+            font-weight: bold; font-size: 16px; color: #ff5555;
+            margin-bottom: 8px; border-bottom: 1px solid #444; padding-bottom: 5px; display: block;
         }
 
-        .tooltip-section {
-            margin-bottom: 15px;
+        /* --- ROSTER STYLES --- */
+        .roster-list {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #ddd;
+            border-top: 1px solid #333;
+            padding-top: 10px;
         }
-
-        @media (max-width: 768px) {
-            .link-box { top: 65%; height: 8%; }
-            .tooltip-text { width: 250px; font-size: 12px; }
-            .recruit .tooltip-text { transform: translateX(-90%); }
+        /* Roster Links (The names) */
+        .roster-row {
+            margin-bottom: 6px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none; /* Removes underline from link */
+            color: #ddd;
         }
+        .roster-row:hover {
+            background-color: rgba(255, 85, 85, 0.1);
+            color: #fff;
+        }
+        .roster-row:hover::after {
+            content: "Message ->";
+            font-size: 10px;
+            color: #aaa;
+        }
+        .roster-role { color: #ff5555; font-weight: bold; margin-right: 5px; }
     </style>
 </head>
 <body>
 
     <div class="splash-container">
-        <img src="backround.jpg" alt="Ubiquitous Nightslayer" class="splash-image">
+        <img src="bg.jpg" 
+             id="mainImage"
+             alt="Ubiquitous Nightslayer" 
+             class="splash-image"
+             onerror="tryNextExtension(this)">
 
-        <a href="javascript:void(0)" onclick="checkDiscordPassword()" class="link-box discord" title="Join Discord"></a>
-        <a href="https://www.youtube.com/channel/UC7tfn3SN2w_XpDY6GMobH7w" target="_blank" class="link-box youtube" title="Watch on YouTube"></a>
-        <a href="https://fresh.warcraftlogs.com/guild/us/nightslayer/ubiquitous" target="_blank" class="link-box logs" title="Warcraft Logs"></a>
+        <a href="https://www.youtube.com/channel/UC7tfn3SN2w_XpDY6GMobH7w" target="_blank" class="link-box youtube"></a>
+        <a href="https://fresh.warcraftlogs.com/guild/us/nightslayer/ubiquitous" target="_blank" class="link-box logs"></a>
         
-        <a href="https://discord.com/channels/1441292810325332001/1441966409935487106" target="_blank" class="link-box softres">
+        <div class="link-box softres" id="softres-box" onclick="toggleTooltip(event)">
             <div class="tooltip-text">
                 <span class="tooltip-header">Raid Sign-ups</span>
-                We use SoftRes.it for loot. Active links are pinned in the Discord channel.<br><br>
-                <span style="color: #ff5555;">&raquo; Click to open Discord</span>
-            </div>
-        </a>
-        
-        <div class="link-box recruit">
-            <div class="tooltip-text">
-                <div class="tooltip-section">
-                    <span class="tooltip-header">About Ubiquitous</span>
-                    We are a community of mature players united by a single goal: clearing content efficiently while genuinely enjoying the game.
-                </div>
-                <div class="tooltip-section">
-                    <span class="tooltip-header">Our Philosophy</span>
-                    Transparency is our foundation. The core raiders drive the direction of the guild, while officers exist solely to facilitate the will of the group.
-                </div>
-                <div class="tooltip-section" style="border-top: 1px solid #444; padding-top: 10px; margin-bottom: 0;">
-                    <span class="tooltip-header">High Priority Needs</span>
-                    <ul style="margin: 5px 0 0 20px; padding: 0; color: #ff5555;">
-                        <li>Hunter (2)</li>
-                        <li>Retribution Paladin</li>
-                    </ul>
-                </div>
+                <div id="discord-signups">Fetching latest post...</div>
+                <br><span style="color: #ff5555; font-size: 11px;">(Click to keep open & click links)</span>
             </div>
         </div>
 
+        <div class="link-box recruit">
+            <div class="tooltip-text">
+                <span class="tooltip-header">About Ubiquitous</span>
+                <p style="margin-top:0;">We are a community of mature players united by a single goal: clearing content efficiently while genuinely enjoying the game.</p>
+                <p>We believe in "serious fun"—we joke, we laugh, and we enjoy the banter, but we respect each other's time and focus when it counts.</p>
+                <p style="font-style:italic; color:#aaa; margin-bottom:5px;">Transparency is our foundation.</p>
+                
+                <div class="roster-list">
+                    <div class="tooltip-header" style="font-size:14px; margin-top:10px;">Leadership (Click to Message)</div>
+                    
+                    <a href="https://discord.com/users/196004305252122624" target="_blank" class="roster-row">
+                        <span><span class="roster-role">GM:</span> Slappy</span>
+                    </a>
+                    
+                    <a href="https://discord.com/users/307250863343403030" target="_blank" class="roster-row">
+                        <span><span class="roster-role">Co-GM:</span> Zizex</span>
+                    </a>
+                    
+                    <a href="https://discord.com/users/278604665459834890" target="_blank" class="roster-row">
+                        <span><span class="roster-role">Officer:</span> Facepom</span>
+                    </a>
+                    
+                    <a href="https://discord.com/users/136312701390422017" target="_blank" class="roster-row">
+                        <span><span class="roster-role">Officer:</span> Beekeeperjim</span>
+                    </a>
+
+                    <a href="https://discord.com/users/457738183510196226" target="_blank" class="roster-row">
+                        <span><span class="roster-role">Officer:</span> Frosty</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        function checkDiscordPassword() {
-            var password = prompt("Please enter the password to join Discord:");
-            if (password && password.trim() === "Feetpicsplox") {
-                window.location.href = "https://discord.gg/WVkZUKaKPJ";
-            } else if (password != null) {
-                alert("Incorrect password.");
+        // 1. Image Recovery
+        var attempts = 0;
+        function tryNextExtension(img) {
+            var extensions = ['bg.png', 'bg.jpeg', 'bg.webp'];
+            if (attempts < extensions.length) {
+                img.src = extensions[attempts];
+                attempts++;
+            } else {
+                document.body.innerHTML = '<h2 style="color:white; text-align:center;">Image not found.<br>Ensure image is named "bg" (bg.jpg or bg.png)</h2>';
             }
         }
-    </script>
 
+        // 2. Tooltip Toggle
+        function toggleTooltip(event) {
+            event.stopPropagation();
+            document.getElementById('softres-box').classList.toggle('active');
+        }
+        document.addEventListener('click', function() {
+            document.getElementById('softres-box').classList.remove('active');
+        });
+
+        // 3. Discord Fetcher
+        async function getDiscordContent() {
+            const WORKER_URL = 'https://discord-news-bridge.robert-d-hopper.workers.dev/'; 
+            try {
+                const response = await fetch(WORKER_URL);
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    let text = data[0].content;
+                    const urlRegex = /(https?:\/\/[^\s]+)/g;
+                    document.getElementById('discord-signups').innerHTML = text.replace(urlRegex, url => `<a href="${url}" target="_blank">${url}</a>`);
+                }
+            } catch (err) {
+                document.getElementById('discord-signups').innerText = "Visit Discord for links.";
+            }
+        }
+        getDiscordContent();
+    </script>
 </body>
 </html>
